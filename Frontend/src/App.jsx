@@ -1,12 +1,18 @@
 import { useState } from 'react';
-import Game from './components/Game';
 
 function App() {
+ 
+
   return (
     <>
-      <Game />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
 
+export default App;
 export default App;
