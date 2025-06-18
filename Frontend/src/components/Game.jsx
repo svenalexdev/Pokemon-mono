@@ -1,4 +1,3 @@
-//Around 1500px w
 import GameVisual from './gameassets/GameVisual';
 import BattleMenu from './gameassets/BattleMenu';
 
