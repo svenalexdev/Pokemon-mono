@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router';
+import HomePage from './pages/HomePage';
 
 function App() {
- 
-
   return (
     <>
       <BrowserRouter>
@@ -14,5 +13,4 @@ function App() {
   );
 }
 
-export default App;
 export default App;

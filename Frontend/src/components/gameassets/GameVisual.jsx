@@ -4,9 +4,7 @@ import PokemonTrainer from './PokemonTrainer';
 import PokemonInfo from './PokemonInfo';
 import EnemyInfo from './EnemyInfo';
 import Prof from '../../assets/Spr-RS-Birch.png';
-
-const enemyName = 'mudkip';
-const myPokemonName = 'zigzagoon';
+import { enemyName, myPokemonName } from '../Game';
 
 function GameVisual() {
   return (
