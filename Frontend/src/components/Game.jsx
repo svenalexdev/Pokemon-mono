@@ -31,13 +31,13 @@ function Game() {
 
   const [winner, setWinner] = useState(null);
 
-  // Initial, w/ placeholder
+  // Initial, hardcoded w/ placeholder
   useEffect(() => {
     setPlayerPokemon(getPlaceholderPokemon('pikachu'));
     setAiPokemon(getPlaceholderPokemon('charmander'));
   }, []);
 
-  // If player selected move, AI selects automatically
+  // If player selected move, AI selects automatically (moves later from fetch, not mock)
   useEffect(() => {
     if (isPlayerMoveLocked && !isAiMoveLocked && aiPokemon) {
       const randomIndex = Math.floor(Math.random() * aiPokemon.moves.length);
@@ -46,7 +46,7 @@ function Game() {
     }
   }, [isPlayerMoveLocked, isAiMoveLocked, aiPokemon]);
 
-  // Lock player move
+  // Lock player move (will be passed to BattleMenu)
   const handlePlayerMoveSelect = move => {
     if (!isPlayerMoveLocked) {
       setPlayerMove(move);
