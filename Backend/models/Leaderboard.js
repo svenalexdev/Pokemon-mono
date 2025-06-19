@@ -15,13 +15,14 @@ const leaderboardSchema = new Schema(
             type: String,
             required: [true, "Player Pokemon is required"],
         },
-        rivalPokemon: {
-            type: String,
-            required: [true, "Rival Pokemon is required"],
-        },
         winningStreak: {
             type: Number,
             required: [true, "Winning streak is required"],
+        },
+        rivalPokemon: {
+            // lostAgainst
+            type: String,
+            required: [true, "Rival Pokemon is required"],
         },
         isGuest: { type: Boolean, default: true }, // Guests don't have userId
     },

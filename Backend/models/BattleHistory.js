@@ -7,13 +7,13 @@ const battleHistorySchema = new Schema(
             ref: "User",
             required: true,
         },
-        username: {
-            type: String,
-            required: [true, "Username is required"],
-            minLength: [2, "Minimum length is 2 characters"],
-            maxLength: [30, "Maximum length is 20 characters"],
-            unique: true,
-        },
+        // username: {
+        //     type: String,
+        //     required: [true, "Username is required"],
+        //     minLength: [2, "Minimum length is 2 characters"],
+        //     maxLength: [30, "Maximum length is 20 characters"],
+        //     unique: true,
+        // },
         totalBattles: {
             type: Number,
             default: 0,
@@ -26,7 +26,7 @@ const battleHistorySchema = new Schema(
             type: Number,
             default: 0,
         },
-        winningStreak: {
+        bestStreak: {
             type: Number,
             required: [true, "Winning streak is required"],
             default: 0,
@@ -39,4 +39,4 @@ const battleHistorySchema = new Schema(
     { timestamps: true }
 );
 
-export default model("BattleHistory", battleHistorySchemaSchema);
+export default model("BattleHistory", battleHistorySchema);
