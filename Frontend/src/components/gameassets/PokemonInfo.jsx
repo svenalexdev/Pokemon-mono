@@ -7,7 +7,7 @@ function PokemonInfo() {
   return (
     <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <img src={HPBar} alt="" className="w-120" />
-      <div className="absolute text-[1.9rem] bottom-24 left-18">{myPokemonNameCapital}</div>
+      <div className="absolute text-[1.9rem] tracking-normal text-black bottom-24 left-18">{myPokemonNameCapital}</div>
       <div className="absolute font-black text-[1.7rem] bottom-24 right-11">Lv.0</div>
       <div className="absolute font-black text-[1.7rem] bottom-5 right-23">20 / 20</div>
 

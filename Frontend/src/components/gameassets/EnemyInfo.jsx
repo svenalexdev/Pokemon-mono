@@ -7,7 +7,9 @@ function EnemyInfo() {
   return (
     <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <img src={HPBarEnemy} alt="" className="w-120" />
-      <div className="absolute  text-[1.9rem] bottom-18 left-9">{enemyPokemonNameCapital}</div>
+      <div className="absolute text-[2.05rem] tracking-normal text-black bottom-17 left-8">
+        {enemyPokemonNameCapital}
+      </div>
       <div
         className={`
         absolute top-30 left-0 w-110 bg-blue-100 border-2 border-blue-300 rounded-b-lg

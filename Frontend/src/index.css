@@ -4,3 +4,7 @@
 .pixelated {
   image-rendering: pixelated;
 }
+
+.custom-font-text {
+  font-family: 'PokemonFont', sans-serif;
+}
