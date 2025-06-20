@@ -1,8 +1,9 @@
 import MenubarBackground from '../../assets/MenuBarBackground.png';
 import MenubarOverlay from '../../assets/MenuBarOverlay.png';
+import MoveSelector from './MoveSelector';
 import { myPokemonNameCapital } from '../Game';
 
-function BattleMenu() {
+function BattleMenu({ moves, onSelectMove, isLocked }) {
   return (
     <div className="pixelated">
       <div className="relative">
@@ -12,6 +13,10 @@ function BattleMenu() {
         <div className="absolute bottom-0 right-0">
           <img src={MenubarOverlay} alt="" className="h-[240px]" />
         </div>
+        {/* <div className="p-4 bg-white rounded shadow mt-2">
+          <h2>Choose Your Move!</h2>
+          <MoveSelector moves={moves} onSelectMove={onSelectMove} isLocked={isLocked} />
+        </div> */}
       </div>
     </div>
   );
