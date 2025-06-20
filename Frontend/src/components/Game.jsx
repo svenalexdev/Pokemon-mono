@@ -46,7 +46,7 @@ function Game() {
     }
   }, [isPlayerMoveLocked, isAiMoveLocked, aiPokemon]);
 
-  // Lock player move (will be passed to BattleMenu)
+  // Lock player move
   const handlePlayerMoveSelect = move => {
     if (!isPlayerMoveLocked) {
       setPlayerMove(move);

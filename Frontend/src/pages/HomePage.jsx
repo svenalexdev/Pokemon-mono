@@ -1,4 +1,4 @@
-function Homepage() {
+function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-100 to-blue-200 flex items-center justify-center p-6 text-black relative">
       <div className="absolute right-6 top-1/3 flex flex-col space-y-4">
@@ -42,4 +42,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default HomePage;
