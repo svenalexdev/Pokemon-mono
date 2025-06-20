@@ -1,8 +1,12 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import GameVisual from './gameassets/GameVisual';
 import BattleMenu from './gameassets/BattleMenu';
+export const myPokemonName = 'hariyama';
+export const myPokemonNameCapital = myPokemonName.charAt(0).toUpperCase() + myPokemonName.slice(1).toLowerCase();
+export const enemyName = 'hooh';
+export const enemyPokemonNameCapital = enemyName.charAt(0).toUpperCase() + enemyName.slice(1).toLowerCase();
 
-// Fake Pokemon, replace by fetch later
 const getPlaceholderPokemon = name => ({
   name,
   hp: 100,
@@ -18,6 +22,7 @@ const getPlaceholderPokemon = name => ({
     { name: 'quick-attack', type: 'normal', power: 40 }
   ]
 });
+export const Context = React.createContext();
 
 function Game() {
   const [playerPokemon, setPlayerPokemon] = useState(null);
@@ -53,16 +58,20 @@ function Game() {
       setIsPlayerMoveLocked(true);
     }
   };
-
   return (
-    <div className="w-[1200px] h-[800px] mx-auto mt-10">
-      <GameVisual />
-      <BattleMenu
-        moves={playerPokemon?.moves || []}
-        onSelectMove={handlePlayerMoveSelect}
-        isLocked={isPlayerMoveLocked}
-      />
-    </div>
+    <Context.Provider value={[playerPokemon, setPlayerPokemon]}>
+      <div
+        style={{ fontFamily: 'PokemonFont, sans-serif' }}
+        className="w-[1200px] h-[800px] mx-auto mt-10 relative tracking-wider "
+      >
+        <GameVisual />
+        <BattleMenu
+          moves={playerPokemon?.moves || []}
+          onSelectMove={handlePlayerMoveSelect}
+          isLocked={isPlayerMoveLocked}
+        />
+      </div>
+    </Context.Provider>
   );
 }
 

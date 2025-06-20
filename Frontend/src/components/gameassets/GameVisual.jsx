@@ -1,17 +1,15 @@
-import Grass from '../../assets/background-1.png';
+// import Grass from '../../assets/background-1.png';
 import PokemonEnemy from './PokemonEnemy';
 import PokemonTrainer from './PokemonTrainer';
 import PokemonInfo from './PokemonInfo';
 import EnemyInfo from './EnemyInfo';
 import Prof from '../../assets/Spr-RS-Birch.png';
-
-const enemyName = 'mudkip';
-const myPokemonName = 'zigzagoon';
+import { enemyName, myPokemonName } from '../Game';
 
 function GameVisual() {
   return (
     <div className="relative pixelated">
-      <img src={Grass} alt="" className="w-full " />
+      <img src="/background-1.png" alt="" className="w-full " />
       <div className=" absolute bottom-52 right-47">
         <PokemonEnemy enemyName={enemyName} />
       </div>
