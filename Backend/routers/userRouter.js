@@ -7,7 +7,7 @@ import {
     deleteUser,
 } from "../controllers/users.js";
 import validateBody from "../middlewares/validateBody.js";
-import { userSchema } from "../zod/schemas";
+import { userSchema } from "../zod/schemas.js";
 
 const userRouter = Router();
 

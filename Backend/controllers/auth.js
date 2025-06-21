@@ -30,7 +30,7 @@ const signup = async (req, res) => {
         password: hashedPassword,
     });
 
-    await createInitialStats(user._id);
+    // await createInitialStats(user._id);
 
     const payload = { userId: user._id };
 
@@ -74,4 +74,10 @@ const me = async (req, res) => {
     res.json(user);
 };
 
-export { signup, signin, me };
+const signout = async (req, res) => {
+    res.clearCookie("token");
+
+    res.json({ message: "You have signed out." });
+};
+
+export { signup, signin, me, signout };
