@@ -8,4 +8,4 @@ const getLeaderboard = async (req, res) => {
     res.json(topPlayers);
 };
 
-const createLeaderboardEntry = async (req, res) => {}
+// const createLeaderboardEntry = async (req, res) => {}

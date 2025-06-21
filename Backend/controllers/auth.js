@@ -1,8 +1,62 @@
 import { isValidObjectId } from "mongoose";
+import jwt from "jsonwebtoken";
+import * as bcrypt from "bcrypt";
 import User from "../models/User.js";
 
-const signUp = async (req, res) => {};
+const secret = process.env.JWT_SECRET;
+const tokenOptions = { expiresIn: "7d" };
 
-const signIn = async (req, res) => {};
+const isProduction = process.env.NODE_ENV === "production";
+const cookieOptions = {
+    httpOnly: true,
+    sameSite: isProduction ? "None" : "Lax",
+    secure: isProduction,
+};
+
+const signUp = async (req, res) => {
+    const {
+        sanitizedBody: { email, password },
+    } = req;
+
+    const found = await User.findOne({ email });
+
+    if (found) throw new Error("Email already exists", { cause: 400 });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+        ...req.sanitizedBody,
+        password: hashedPassword,
+    });
+
+    const payload = { userId: user._id };
+
+    const token = jwt.sign(payload, secret, tokenOptions);
+
+    res.cookie("token", token, cookieOptions);
+    res.status(201).json({ message: "Welcome" });
+};
+
+const signIn = async (req, res) => {
+    const {
+        sanitizedBody: { email, password },
+    } = req;
+
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user) throw new Error("User not found", { cause: 404 });
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch)
+        throw new Error("Invalid email or password", { cause: 401 });
+
+    const payload = { userId: user._id };
+
+    const token = jwt.sign(payload, secret, tokenOptions);
+
+    res.cookie("token", token, cookieOptions);
+    res.status(201).json({ message: "Welcome back" });
+};
 
 const me = async (req, res) => {};
