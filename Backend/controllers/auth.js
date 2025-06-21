@@ -2,6 +2,7 @@ import { isValidObjectId } from "mongoose";
 import jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 import User from "../models/User.js";
+import { createInitialStats } from "./battleHistories.js";
 
 const secret = process.env.JWT_SECRET;
 const tokenOptions = { expiresIn: "7d" };
@@ -13,7 +14,7 @@ const cookieOptions = {
     secure: isProduction,
 };
 
-const signUp = async (req, res) => {
+const signup = async (req, res) => {
     const {
         sanitizedBody: { email, password },
     } = req;
@@ -29,6 +30,8 @@ const signUp = async (req, res) => {
         password: hashedPassword,
     });
 
+    await createInitialStats(user._id);
+
     const payload = { userId: user._id };
 
     const token = jwt.sign(payload, secret, tokenOptions);
@@ -37,7 +40,7 @@ const signUp = async (req, res) => {
     res.status(201).json({ message: "Welcome" });
 };
 
-const signIn = async (req, res) => {
+const signin = async (req, res) => {
     const {
         sanitizedBody: { email, password },
     } = req;
@@ -59,4 +62,16 @@ const signIn = async (req, res) => {
     res.status(201).json({ message: "Welcome back" });
 };
 
-const me = async (req, res) => {};
+const me = async (req, res) => {
+    const { userId } = req;
+
+    if (!isValidObjectId(userId)) throw new Error("Invalid id", { cause: 400 });
+
+    const user = await User.findById(userId).lean();
+
+    if (!user) throw new Error("User not found", { cause: 404 });
+
+    res.json(user);
+};
+
+export { signup, signin, me };
