@@ -10,7 +10,7 @@ const getBattleStats = async (req, res) => {
 // const updateBattleStats = async (req, res) => {};
 // z.B. totalBattles++, battlesWon++, bestStreak will be done in extra controller battle.js
 
-// helper function to set initial stats, will be called in signup
+// internal helper function (no CRUD) to set initial stats, will be called in signup
 const createInitialStats = async (userId) => {
     if (!isValidObjectId(userId))
         throw new Error("Invalid user ID", { cause: 400 });
