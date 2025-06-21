@@ -1,5 +1,4 @@
 import Leaderboard from "../models/Leaderboard";
-import { isValidObjectId } from "mongoose";
 
 const getLeaderboard = async (req, res) => {
     const topPlayers = await Leaderboard.find()
@@ -7,3 +6,7 @@ const getLeaderboard = async (req, res) => {
         .limit(10);
     res.json(topPlayers);
 };
+
+// const createLeaderboardEntry = async (req, res) => {}
+
+export default getLeaderboard;
