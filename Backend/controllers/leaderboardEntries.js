@@ -7,3 +7,5 @@ const getLeaderboard = async (req, res) => {
         .limit(10);
     res.json(topPlayers);
 };
+
+const createLeaderboardEntry = async (req, res) => {}

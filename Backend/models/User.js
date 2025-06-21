@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import { minLength } from "zod/v4";
 
 const userSchema = new Schema(
     {
