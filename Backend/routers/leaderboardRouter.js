@@ -4,6 +4,6 @@ import { leaderboardSchema } from "../zod/schemas";
 
 const leaderboardRouter = Router();
 
-leaderboardRouter.route("/leaderboard").get(getLeaderboard);
+leaderboardRouter.route("/").get(getLeaderboard);
 
 export default leaderboardRouter;
