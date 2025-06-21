@@ -1,9 +1,10 @@
 function fetchPokemon() {
   const apiKey = 'https://pokeapi.co/api/v2/pokemon?limit=386';
+  const apiKeySearch = 'https://pokeapi.co/api/v2/pokemon/';
 
   const fetchedPokemon = async searchPokemon => {
     if (searchPokemon) {
-      const res = await fetch(apiKey + searchPokemon);
+      const res = await fetch(apiKeySearch + searchPokemon);
       if (!res.ok) {
         throw new Error(`HTTP Error! ${res.status}`);
       }

@@ -1,15 +1,23 @@
 import { useState } from 'react';
 import HPBar from '../../assets/PokemonInfo.png';
-import { myPokemonNameCapital } from '../Game';
+import { useContext } from 'react';
+import Context from '../../utils/Context';
+import { capitalizePokemonName } from '../../utils/transformPokemonName';
 
 function PokemonInfo() {
+  const { playerPokemon } = useContext(Context);
   const [isHovered, setIsHovered] = useState(false);
   return (
     <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <img src={HPBar} alt="" className="w-120" />
-      <div className="absolute text-[1.9rem] tracking-normal text-black bottom-24 left-18">{myPokemonNameCapital}</div>
+      <div className="absolute text-[1.9rem] tracking-normal text-black bottom-24 left-18">
+        {capitalizePokemonName(playerPokemon.name)}
+      </div>
       <div className="absolute font-black text-[1.7rem] bottom-24 right-11">Lv.0</div>
-      <div className="absolute font-black text-[1.7rem] bottom-5 right-23">20 / 20</div>
+      <div className="absolute font-black text-[1.7rem] bottom-5 right-23">
+        {' '}
+        {playerPokemon.hp} / {playerPokemon.maxHp}
+      </div>
 
       <div
         className={`
@@ -20,12 +28,12 @@ function PokemonInfo() {
       >
         <div className="p-4">
           <h3 className="font-bold text-lg">Additional Info</h3>
-          <p>Type: Normal</p>
-          <p>Speed: 0</p>
-          <p>Attack: 0</p>
-          <p>Defense: 0</p>
-          <p>Special-Attack: 0</p>
-          <p>Special-Defense: 0</p>
+          <p>Type: {playerPokemon.types}</p>
+          <p>Speed: {playerPokemon.speed}</p>
+          <p>Attack: {playerPokemon.attack}</p>
+          <p>Defense: {playerPokemon.defense}</p>
+          <p>Special-Attack: {playerPokemon.specialAttack}</p>
+          <p>Special-Defense: {playerPokemon.specialDefense}</p>
         </div>
       </div>
     </div>
