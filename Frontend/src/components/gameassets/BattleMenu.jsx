@@ -36,13 +36,8 @@ function BattleMenu() {
         </div>
         <div className="absolute bottom-0 right-0">
           <img src={MenubarOverlay} alt="" className="h-[240px]" />
-          <div className="absolute top-13 left-13">{renderMoveButton()}</div>
+          <div className="absolute top-13 left-15 w-119 grid grid-cols-2 justify-between">{renderMoveButton()}</div>
         </div>
-
-        {/* <div className="p-4 bg-white rounded shadow mt-2">
-          <h2>Choose Your Move!</h2>
-          <MoveSelector moves={moves} onSelectMove={onSelectMove} isLocked={isLocked} />
-        </div> */}
       </div>
     </div>
   );

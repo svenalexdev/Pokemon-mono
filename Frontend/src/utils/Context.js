@@ -8,7 +8,21 @@ const Context = createContext({
   winner: null,
   handlePlayerMove: () => {},
   resetGame: () => {},
-  isPlayerMoveLocked: false
+  isPlayerMoveLocked: false,
+  playerAnimation: false,
+  aiAnimation: false,
+  setPlayerName: () => {},
+  // searchTerm: '',
+  // setSearchTerm: () => {},
+  searchResults: [],
+  setSearchResults: () => {},
+  selectedPokemon: null,
+  setSelectedPokemon: () => {},
+  isSearching: false,
+  setIsSearching: () => {},
+  error: null,
+  setError: () => {},
+  handleStartGame: () => {}
 });
 
 export default Context;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import fetchPokemon from '../utils/fetchData';
+import { fetchPokemon } from '../utils/fetchData';
 import { transformPokemonName } from '../utils/transformPokemonName';
 
 function PokedexPage() {
@@ -32,11 +32,7 @@ function PokedexPage() {
             key={index}
             className="bg-white rounded-lg p-4 shadow-md hover:scale-105 transition transform text-center"
           >
-            <img
-              src={`https://play.pokemonshowdown.com/sprites/gen5ani/${transformPokemonName(pokemon.name)}.gif`}
-              alt={pokemon.name}
-              className="mx-auto w-17 h-17 mb-2 object-contain pixelated"
-            />
+            <img src={pokemon.sprites.front_default} alt={pokemon.name} className="mx-auto w-20 h-20 mb-2" />
             <h2 className="text-xl capitalize font-semibold mb-2">{pokemon.name}</h2>
             <p className="text-sm text-gray-600 mb-1"># {pokemon.id}</p>
             <p>

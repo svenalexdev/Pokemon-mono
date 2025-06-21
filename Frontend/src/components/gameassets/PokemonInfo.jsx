@@ -2,18 +2,34 @@ import { useState } from 'react';
 import HPBar from '../../assets/PokemonInfo.png';
 import { useContext } from 'react';
 import Context from '../../utils/Context';
-import { capitalizePokemonName } from '../../utils/transformPokemonName';
 
 function PokemonInfo() {
   const { playerPokemon } = useContext(Context);
   const [isHovered, setIsHovered] = useState(false);
+
+  const playerHpPercentage = playerPokemon ? (playerPokemon.hp / playerPokemon.maxHp) * 100 : 100;
+
+  const getHpBarColor = percentage => {
+    if (percentage > 60) return 'bg-green-500';
+    if (percentage > 20) return 'bg-yellow-500';
+    return 'bg-red-500';
+  };
+
   return (
-    <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+    <div className="relative z-3" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <img src={HPBar} alt="" className="w-120" />
-      <div className="absolute text-[1.9rem] tracking-normal text-black bottom-24 left-18">
-        {capitalizePokemonName(playerPokemon.name)}
+      <div className="absolute text-[1.9rem] tracking-normal text-black bottom-24 left-18 capitalize">
+        {playerPokemon.name}
       </div>
       <div className="absolute font-black text-[1.7rem] bottom-24 right-11">Lv.0</div>
+      <div className="absolute top-16 right-9 w-56 -z-1">
+        <div className="w-full bg-gray-300 h-10">
+          <div
+            className={`h-10 ${getHpBarColor(playerHpPercentage)} transition-all duration-500`}
+            style={{ width: `${playerHpPercentage}%` }}
+          ></div>
+        </div>
+      </div>
       <div className="absolute font-black text-[1.7rem] bottom-5 right-23">
         {' '}
         {playerPokemon.hp} / {playerPokemon.maxHp}
