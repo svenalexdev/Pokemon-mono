@@ -30,7 +30,7 @@ const signup = async (req, res) => {
         password: hashedPassword,
     });
 
-    // await createInitialStats(user._id);
+    await createInitialStats(user._id);
 
     const payload = { userId: user._id };
 
@@ -42,10 +42,10 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
     const {
-        sanitizedBody: { email, password },
+        sanitizedBody: { username, password },
     } = req;
 
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ username }).select("+password");
 
     if (!user) throw new Error("User not found", { cause: 404 });
 

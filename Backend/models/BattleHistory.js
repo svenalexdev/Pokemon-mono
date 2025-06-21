@@ -34,6 +34,7 @@ const battleHistorySchema = new Schema(
         bestBrawler: {
             type: String,
             required: false,
+            default: "",
         },
     },
     { timestamps: true }
