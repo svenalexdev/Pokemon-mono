@@ -8,3 +8,74 @@
 .custom-font-text {
   font-family: 'PokemonFont', sans-serif;
 }
+
+@layer components {
+  /* Base Move Button */
+  .move-btn {
+    @apply px-4 py-2 m-1 rounded-lg font-bold cursor-pointer transition-all text-white shadow-md text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center;
+  }
+
+  /* Type-Specific Buttons */
+  .move-btn.normal {
+    @apply bg-gray-400 hover:bg-gray-500;
+  }
+  .move-btn.fire {
+    @apply bg-red-500 hover:bg-red-600;
+  }
+  .move-btn.water {
+    @apply bg-blue-500 hover:bg-blue-600;
+  }
+  .move-btn.electric {
+    @apply bg-yellow-400 hover:bg-yellow-500 text-gray-800;
+  }
+  .move-btn.grass {
+    @apply bg-green-500 hover:bg-green-600;
+  }
+  .move-btn.ice {
+    @apply bg-cyan-300 hover:bg-cyan-400 text-gray-800;
+  }
+  .move-btn.fighting {
+    @apply bg-red-700 hover:bg-red-800;
+  }
+  .move-btn.poison {
+    @apply bg-purple-600 hover:bg-purple-700;
+  }
+  .move-btn.ground {
+    @apply bg-amber-600 hover:bg-amber-700;
+  }
+  .move-btn.flying {
+    @apply bg-indigo-300 hover:bg-indigo-400 text-gray-800;
+  }
+  .move-btn.psychic {
+    @apply bg-pink-500 hover:bg-pink-600;
+  }
+  .move-btn.bug {
+    @apply bg-lime-500 hover:bg-lime-600;
+  }
+  .move-btn.rock {
+    @apply bg-amber-800 hover:bg-amber-900;
+  }
+  .move-btn.ghost {
+    @apply bg-purple-800 hover:bg-purple-900;
+  }
+  .move-btn.dragon {
+    @apply bg-gradient-to-r from-purple-600 to-amber-500 hover:from-purple-700 hover:to-amber-600;
+  }
+  .move-btn.dark {
+    @apply bg-gray-800 hover:bg-gray-900;
+  }
+  .move-btn.steel {
+    @apply bg-gray-300 hover:bg-gray-400 text-gray-800;
+  }
+  .move-btn.fairy {
+    @apply bg-pink-300 hover:bg-pink-400 text-gray-800;
+  }
+
+  /* Move Info Elements */
+  .move-name {
+    @apply font-bold mr-2;
+  }
+  .move-type {
+    @apply text-xs px-2 py-1 rounded-full bg-black;
+  }
+}
