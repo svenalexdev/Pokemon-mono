@@ -9,6 +9,7 @@ import IntroBackground from '../assets/IntroBackground.png';
 import { getBattleHistory } from '../data';
 
 function Game() {
+  // Big mess of useStates (filter later?)
   const [playerPokemon, setPlayerPokemon] = useState(null);
   const [playerName, setPlayerName] = useState('');
   const [playerPokemonName, setPlayerPokemonName] = useState('');
@@ -25,28 +26,40 @@ function Game() {
   const [aiAnimation, setAiAnimation] = useState(false);
   const myPokemonName = playerPokemonName;
 
+  // for IntroScreen.jsx
   const handleStartGame = (name, pokemon) => {
     setPlayerName(name);
     setPlayerPokemonName(pokemon);
     setGameStarted(true);
   };
 
+  // Animation Trigger for attacks
   const triggerPlayerAnimation = () => {
     setPlayerAnimation(true);
     setTimeout(() => setPlayerAnimation(false), 300);
   };
-
   const triggerAiAnimation = () => {
     setAiAnimation(true);
     setTimeout(() => setAiAnimation(false), 300);
   };
 
+  // set all localstorage items
   // set LocalStorage name
   useEffect(() => {
     if (playerName) {
-      localStorage.setItem('pokemonPlayerName', playerName);
+      localStorage.setItem('username', playerName);
     }
   }, [playerName]);
+  useEffect(() => {
+    if (playerPokemonName) {
+      localStorage.setItem('playerPokemon', playerPokemonName);
+    }
+  }, [playerPokemonName]);
+  useEffect(() => {
+    if (aiPokemon) {
+      localStorage.setItem('rivalPokemon', aiPokemon.name);
+    }
+  }, [aiPokemon]);
 
   // Fetch data
   useEffect(() => {
@@ -60,7 +73,6 @@ function Game() {
         return null;
       }
     };
-
     const fetchAllPokemon = async () => {
       const player = await fetchPokemon(myPokemonName, true);
       const ai = await fetchPokemon(Math.floor(Math.random() * 386) + 1, false);
@@ -70,10 +82,10 @@ function Game() {
       await new Promise(resolve => setTimeout(resolve, 300));
       setIsLoading(false);
     };
-
     fetchAllPokemon();
   }, [gameStarted, playerPokemonName]);
 
+  // Next AiPokemon Fetch after win
   const nextAiPokemon = async () => {
     const fetchPokemon = async name => {
       try {
@@ -146,11 +158,10 @@ function Game() {
 
   // Damage calculation function
   const calculateDamage = (attacker, defender, move) => {
-    // Always use attack stat (simplified)
     const attackStat = attacker.attack;
     const defenseStat = defender.defense;
 
-    // Calculate type effectiveness
+    // Calculate type effectiveness from utils/battleLogic.js
     let effectiveness = 1;
     defender.types.forEach(type => {
       if (typeEffective[move.type]?.[type]) {
@@ -169,6 +180,7 @@ function Game() {
     defender.hp = Math.max(0, defender.hp - damage);
   };
 
+  // When Player wins for next round
   useEffect(() => {
     if (winner === 'ai' || winner === 'player') {
       console.log(`Winner is ${winner === 'ai' ? 'AI' : 'Player'}`);
@@ -180,7 +192,7 @@ function Game() {
     }
   }, [winner]);
 
-  // Reset game
+  // Reset game (actually next round if player wins)
   const resetGame = () => {
     if (playerPokemon) setPlayerPokemon({ ...playerPokemon, hp: playerPokemon.maxHp });
     nextAiPokemon();
@@ -194,10 +206,12 @@ function Game() {
     }, 300);
   };
 
+  // Function when Player loses (executed in BattleMenu.jsx)
   const endGame = () => {
     console.log('Game ended');
+    // CRUD OPERATION FOR LOCAL STORAGE HERE
+    localStorage.setItem('winningStreak', 1);
     setGameStarted(false);
-    // setSelectedPokemon(null);
     setPlayerPokemon(null);
     setAiPokemon(null);
     setIsLoading(true);
@@ -232,6 +246,7 @@ function Game() {
     return <IntroScreen onStartGame={handleStartGame} />;
   }
 
+  // Loading Screen
   if (isLoading) {
     return (
       <>
@@ -252,7 +267,7 @@ function Game() {
     <Context.Provider value={contextValue}>
       <div
         style={{ fontFamily: 'PokemonFont, sans-serif' }}
-        className="w-[1200px] h-[800px] mx-auto mt-10 relative tracking-wider"
+        className="w-[1200px] h-[800px] mx-auto mt-10 relative tracking-wider shadow-2xl"
       >
         <GameVisual />
         <BattleMenu />

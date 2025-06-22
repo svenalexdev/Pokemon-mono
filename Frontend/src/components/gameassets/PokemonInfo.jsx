@@ -2,10 +2,22 @@ import { useState } from 'react';
 import HPBar from '../../assets/PokemonInfo.png';
 import { useContext } from 'react';
 import Context from '../../utils/Context';
+import { useEffect } from 'react';
 
 function PokemonInfo() {
-  const { playerPokemon } = useContext(Context);
+  const { playerPokemon, winner } = useContext(Context);
   const [isHovered, setIsHovered] = useState(false);
+  const [level, setLevel] = useState(1);
+
+  useEffect(() => {
+    if (winner === 'player') {
+      setLevel(prevLevel => {
+        const newLevel = prevLevel + 1;
+        localStorage.setItem('winningStreak', newLevel);
+        return newLevel;
+      });
+    }
+  }, [winner]);
 
   const playerHpPercentage = playerPokemon ? (playerPokemon.hp / playerPokemon.maxHp) * 100 : 100;
 
@@ -21,7 +33,7 @@ function PokemonInfo() {
       <div className="absolute text-[1.9rem] tracking-normal text-black bottom-24 left-18 capitalize">
         {playerPokemon.name}
       </div>
-      <div className="absolute font-black text-[1.7rem] bottom-24 right-11">Lv.0</div>
+      <div className="absolute font-black text-[1.7rem] bottom-24 right-11">Lv.{level}</div>
       <div className="absolute top-16 right-9 w-56 -z-1">
         <div className="w-full bg-gray-300 h-10">
           <div
@@ -37,13 +49,12 @@ function PokemonInfo() {
 
       <div
         className={`
-        absolute bottom-full left-17 w-[80%] bg-[#F8F8D8] border-5 border-[#506860] rounded-t-lg
+        absolute bottom-full left-17 w-[80%] bg-[#F8F8D8] border-5 border-[#506860] rounded-t-2xl
         overflow-hidden transition-all duration-300 ease-in-out
         ${isHovered ? 'max-h-52 opacity-100' : 'max-h-0 opacity-0'}
       `}
       >
-        <div className="p-4">
-          <h3 className="font-bold text-lg">Additional Info</h3>
+        <div className="text-[1.2rem] p-4 pt-3">
           <p>Type: {playerPokemon.types.join(', ')}</p>
           <p>Speed: {playerPokemon.speed}</p>
           <p>Attack: {playerPokemon.attack}</p>

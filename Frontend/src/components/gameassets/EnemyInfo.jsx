@@ -31,15 +31,16 @@ function EnemyInfo() {
       </div>
       <div
         className={`
-        absolute top-30 left-0 w-110 bg-blue-100 border-2 border-blue-300 rounded-b-lg
+        absolute top-30 left-5 w-[82%] bg-[#F8F8D8] border-5 border-[#506860] rounded-b-2xl
         overflow-hidden transition-all duration-300 ease-in-out
-        ${isHovered ? 'max-h-56 opacity-100' : 'max-h-0 opacity-0'}
+        ${isHovered ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'}
       `}
       >
-        <div className="p-4">
-          <h3 className="font-bold text-lg">Additional Info</h3>
-          <p>Base HP: {aiPokemon.hp}</p>
-          <p>Type: {aiPokemon.types}</p>
+        <div className="text-[1.2rem] p-4">
+          <p>
+            HP: {aiPokemon.hp} / {aiPokemon.maxHp}
+          </p>
+          <p>Type: {aiPokemon.types.join(', ')}</p>
           <p>Speed: {aiPokemon.speed}</p>
           <p>Attack: {aiPokemon.attack}</p>
           <p>Defense: {aiPokemon.defense}</p>
@@ -52,3 +53,8 @@ function EnemyInfo() {
 }
 
 export default EnemyInfo;
+// className={`
+//         absolute top-30 left-0 w-110 bg-blue-100 border-2 border-blue-300 rounded-b-lg
+//         overflow-hidden transition-all duration-300 ease-in-out
+//         ${isHovered ? 'max-h-56 opacity-100' : 'max-h-0 opacity-0'}
+//       `}

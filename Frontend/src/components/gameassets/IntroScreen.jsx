@@ -15,6 +15,7 @@ function IntroScreen({ onStartGame }) {
   const [error, setError] = useState(null);
   const [isRandomizing, setIsRandomizing] = useState(false);
 
+  // Get random Ai Pokemon
   const handleRandomPokemon = async () => {
     setIsRandomizing(true);
     setIsSearching(true);
@@ -36,13 +37,15 @@ function IntroScreen({ onStartGame }) {
     }
   };
 
+  // Insert localStorage Name into field
   useEffect(() => {
-    const savedName = localStorage.getItem('pokemonPlayerName');
+    const savedName = localStorage.getItem('username');
     if (savedName) {
       setPlayerName(savedName);
     }
   }, []);
 
+  // useEffect for Search Pokemon field
   useEffect(() => {
     const searchPokemon = async () => {
       if (searchTerm.length < 2) {
@@ -61,7 +64,7 @@ function IntroScreen({ onStartGame }) {
       } catch (err) {
         // If exact match fails, try to search from a list
         try {
-          const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1000`);
+          const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=386`);
           const data = await response.json();
           const filtered = data.results.filter(pokemon => pokemon.name.includes(searchTerm.toLowerCase())).slice(0, 5); // Limit to 5 results
           // Fetch details for the filtered results
@@ -101,9 +104,10 @@ function IntroScreen({ onStartGame }) {
   };
 
   return (
-    <div className="w-[1200px] h-[630px] mx-auto mt-10 relative tracking-wider pixelated z-1">
+    <div className="w-[1200px] h-[630px] mx-auto mt-10 relative tracking-wider pixelated z-1 shadow-2xl">
       <img src={IntroBackground} alt="" className="w-[1200px] h-[630px] absolute right-0 bottom-0 -z-1" />
-      <div className="absolute -z-1 left-3 top-5 w-[404px] h-[590px] rounded-xl bg-white"></div>
+      <div className="absolute -z-1 left-3 top-5 w-[404px] h-[210px] rounded-xl bg-white"></div>
+      <div className="absolute -z-1 left-3 bottom-5 w-[404px] h-[315px] rounded-xl bg-white"></div>
       <div className=" p-8 mx-auto" style={{ fontFamily: 'PokemonFont, sans-serif' }}>
         <h1 className="text-2xl mt-1 font-bold mb-4 uppercase">
           Hello! Welcome <br></br> to PokeBrawl!
@@ -113,10 +117,18 @@ function IntroScreen({ onStartGame }) {
             <img src={Ground} alt="" className="absolute right-10 bottom-8 w-80" />
             <img src={Ground} alt="" className="absolute right-103 bottom-8 w-80" />
             <img src={ProfEich} alt="" className="absolute right-17 bottom-18 w-70" />
-            <img src={Pokeball} alt="" className="absolute right-72 bottom-67 w-12" />
+            <img
+              src={Pokeball}
+              alt=""
+              className={`absolute right-72 bottom-67 w-12 ${
+                selectedPokemon ? 'right-90 bottom-80 transition-all duration-400 ease-out opacity-0' : ''
+              }`}
+            />
 
             <span className="text-2xl  uppercase">My name is OAK! People call me the POKEMON PROF!</span>
-            <label className="block mt-10 mb-2 text-xl uppercase">First, what is your name?</label>
+            <label className="block mt-25 mb-2 text-xl uppercase">
+              First of all...<br></br> what is your name?
+            </label>
             <input
               type="text"
               value={playerName}
@@ -169,11 +181,11 @@ function IntroScreen({ onStartGame }) {
               type="button"
               onClick={handleRandomPokemon}
               disabled={isSearching}
-              className={`w-90 py-2 px-4 mt-4 rounded cursor-pointer ${
+              className={`w-90 py-2 px-4 mt-3 rounded cursor-pointer ${
                 isSearching ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-500 hover:bg-gray-600 text-white'
               }`}
             >
-              {isSearching ? 'Loading...' : 'Get Random Pokémon'}
+              {isSearching ? 'Loading...' : 'Get Random Pokemon'}
             </button>
             {/* {isSearching && (
               <div className="absolute z-10 w-full bg-white border rounded mt-1 p-2">
@@ -192,7 +204,7 @@ function IntroScreen({ onStartGame }) {
                   selectedPokemon.name
                 )}.gif`}
                 alt=""
-                className="absolute w-90 h-50 object-contain right-98 bottom-15   "
+                className={'absolute w-90 h-50 object-contain right-98 bottom-15'}
               />
             </div>
           )}
@@ -200,10 +212,8 @@ function IntroScreen({ onStartGame }) {
           <button
             type="submit"
             disabled={!playerName || !selectedPokemon}
-            className={`w-90 py-2 px-4 rounded cursor-pointer ${
-              playerName && selectedPokemon
-                ? 'bg-red-500 hover:bg-red-600 text-white'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            className={`text-2xl absolute right-98 top-5 w-90 py-4 px-4 rounded cursor-pointer ${
+              playerName && selectedPokemon ? 'bg-red-500 hover:bg-red-600 text-white' : 'opacity-0 cursor-not-allowed'
             }`}
           >
             Start Battle!
