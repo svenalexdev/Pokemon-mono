@@ -21,6 +21,10 @@ function Homepage() {
     navigate('howtoplay');
   };
 
+  const goToRegister = () => {
+    navigate('register');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-100 to-blue-200 flex items-center justify-center p-6 text-black relative">
       <div className="absolute right-6 top-1/3 flex flex-col space-y-4">
@@ -38,6 +42,9 @@ function Homepage() {
         </button>
         <button onClick={goToHowToPlay} className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600">
           How to Play
+        </button>
+        <button onClick={goToRegister} className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600">
+          Register
         </button>
       </div>
       <Game />
