@@ -10,7 +10,7 @@ import userRouter from "./routers/userRouter.js";
 const app = express();
 const port = process.env.PORT || 8000;
 
-app.use(cors({ origin: "process.env.SPA_ORIGIN, credentials: true" }));
+app.use(cors({ origin: process.env.SPA_ORIGIN, credentials: true }));
 app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/stats", battleRouter);
@@ -20,5 +20,5 @@ app.use("*splat", (req, res) => res.status(404).json({ error: "Not found" }));
 app.use(errorHandler);
 
 app.listen(port, () =>
-    console.log(`Server listening on htt://localhost:${port}`)
+    console.log(`Server listening on http://localhost:${port}`)
 );
