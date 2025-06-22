@@ -7,6 +7,12 @@ const getLeaderboard = async (req, res) => {
     res.json(topPlayers);
 };
 
+const createLeaderboardEntry = async (req, res) => {
+    const { sanitizedBody } = req;
+    const newEntry = await Leaderboard.create(sanitizedBody);
+    res.status(201).json(newEntry);
+};
+
 // const createLeaderboardEntry = async (req, res) => {}
 
-export default getLeaderboard;
+export { getLeaderboard, createLeaderboardEntry };
