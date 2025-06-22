@@ -12,7 +12,7 @@
 @layer components {
   /* Base Move Button */
   .move-btn {
-    @apply px-4 py-2 m-1 rounded-lg font-bold cursor-pointer transition-all text-white shadow-md text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center;
+    @apply px-6 py-4 m-1 rounded-lg font-bold cursor-pointer transition-all text-white text-xl sm:text-xl disabled:opacity-50 disabled:cursor-not-allowed flex justify-center;
   }
 
   /* Type-Specific Buttons */
@@ -73,7 +73,7 @@
 
   /* Move Info Elements */
   .move-name {
-    @apply font-bold mr-2;
+    @apply font-bold;
   }
   .move-type {
     @apply text-xs px-2 py-1 rounded-full bg-black;

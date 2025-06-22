@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import fetchPokemon from '../utils/fetchData';
+import { fetchPokemon } from '../utils/fetchData';
 import { transformPokemonName } from '../utils/transformPokemonName';
 
 function PokedexPage() {

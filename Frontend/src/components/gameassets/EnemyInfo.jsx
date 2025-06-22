@@ -2,20 +2,32 @@ import { useState } from 'react';
 import HPBarEnemy from '../../assets/EnemyInfo.png';
 import { useContext } from 'react';
 import Context from '../../utils/Context';
-import { capitalizePokemonName } from '../../utils/transformPokemonName';
 
 function EnemyInfo() {
   const { aiPokemon } = useContext(Context);
   const [isHovered, setIsHovered] = useState(false);
+
+  const aiHpPercentage = aiPokemon ? (aiPokemon.hp / aiPokemon.maxHp) * 100 : 100;
+
+  const getHpBarColor = percentage => {
+    if (percentage > 60) return 'bg-green-500';
+    if (percentage > 20) return 'bg-yellow-500';
+    return 'bg-red-500';
+  };
+
   return (
-    <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+    <div className="relative z-3" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <img src={HPBarEnemy} alt="" className="w-120" />
-      <div className="absolute text-[2.05rem] tracking-normal text-black bottom-17 left-8">
-        {capitalizePokemonName(aiPokemon.name)}
+      <div className="absolute text-[2.05rem] tracking-normal text-black bottom-17 left-8  ">
+        <p className="capitalize"> {aiPokemon.name}</p>
       </div>
-      <div className="absolute font-black text-[1.7rem] top-5 right-23">
-        {' '}
-        {aiPokemon.hp} / {aiPokemon.maxHp}
+      <div className="absolute top-16 right-15 w-59 -z-1">
+        <div className="w-full bg-gray-300 h-10">
+          <div
+            className={`h-10 ${getHpBarColor(aiHpPercentage)} transition-all duration-500`}
+            style={{ width: `${aiHpPercentage}%` }}
+          ></div>
+        </div>
       </div>
       <div
         className={`

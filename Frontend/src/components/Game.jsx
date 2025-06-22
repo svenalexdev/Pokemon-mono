@@ -3,15 +3,15 @@ import { useEffect, useState } from 'react';
 import GameVisual from './gameassets/GameVisual';
 import BattleMenu from './gameassets/BattleMenu';
 import { typeEffective } from '../utils/battleLogic';
-
-export const myPokemonName = 'blaziken';
-// export const enemyName = Math.floor(Math.random() * 386) + 1;
-export const enemyName = 'bulbasaur';
+import { fetchPokemonFight } from '../utils/fetchData';
+import IntroScreen from './gameassets/IntroScreen';
+import IntroBackground from '../assets/IntroBackground.png';
 
 function Game() {
-  //ai
-  // Game state
   const [playerPokemon, setPlayerPokemon] = useState(null);
+  const [playerName, setPlayerName] = useState('');
+  const [playerPokemonName, setPlayerPokemonName] = useState('');
+  const [gameStarted, setGameStarted] = useState(false);
   const [aiPokemon, setAiPokemon] = useState(null);
   const [playerMove, setPlayerMove] = useState(null);
   const [aiMove, setAiMove] = useState(null);
@@ -20,45 +20,40 @@ function Game() {
   const [winner, setWinner] = useState(null);
   const [battleLog, setBattleLog] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [playerAnimation, setPlayerAnimation] = useState(false);
+  const [aiAnimation, setAiAnimation] = useState(false);
+  const myPokemonName = playerPokemonName;
 
-  // Fetch Pokémon data Working
+  const handleStartGame = (name, pokemon) => {
+    setPlayerName(name);
+    setPlayerPokemonName(pokemon);
+    setGameStarted(true);
+  };
+
+  const triggerPlayerAnimation = () => {
+    setPlayerAnimation(true);
+    setTimeout(() => setPlayerAnimation(false), 300);
+  };
+
+  const triggerAiAnimation = () => {
+    setAiAnimation(true);
+    setTimeout(() => setAiAnimation(false), 300);
+  };
+
+  // set LocalStorage name
   useEffect(() => {
-    const fetchPokemon = async (name, isPlayer) => {
+    if (playerName) {
+      localStorage.setItem('pokemonPlayerName', playerName);
+    }
+  }, [playerName]);
+
+  // Fetch data
+  useEffect(() => {
+    if (!gameStarted) return;
+
+    const fetchPokemon = async name => {
       try {
-        // Fetch Pokémon data
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-        const data = await response.json();
-
-        // Create moves from types
-        const moves = data.types.map(type => ({
-          name: type.type.name,
-          type: type.type.name,
-          damageClass: 'physical', // Default to physical
-          power: 40 // Base power for type moves
-        }));
-
-        // Add a basic "Tackle" move as fallback
-
-        moves.push({
-          name: 'tackle',
-          type: 'normal',
-          damageClass: 'physical',
-          power: 40
-        });
-
-        // Create Pokémon object
-        return {
-          name: data.name,
-          hp: data.stats[0].base_stat,
-          maxHp: data.stats[0].base_stat,
-          speed: data.stats[5].base_stat,
-          attack: data.stats[1].base_stat,
-          defense: data.stats[2].base_stat,
-          specialAttack: data.stats[3].base_stat,
-          specialDefense: data.stats[4].base_stat,
-          types: data.types.map(t => t.type.name),
-          moves: moves
-        };
+        return fetchPokemonFight(name);
       } catch (error) {
         console.error(`Error fetching ${name}:`, error);
         return null;
@@ -67,15 +62,29 @@ function Game() {
 
     const fetchAllPokemon = async () => {
       const player = await fetchPokemon(myPokemonName, true);
-      const ai = await fetchPokemon(enemyName, false);
+      const ai = await fetchPokemon(Math.floor(Math.random() * 386) + 1, false);
 
       setPlayerPokemon(player);
       setAiPokemon(ai);
+      await new Promise(resolve => setTimeout(resolve, 300));
       setIsLoading(false);
     };
 
     fetchAllPokemon();
-  }, []);
+  }, [gameStarted, playerPokemonName]);
+
+  const nextAiPokemon = async () => {
+    const fetchPokemon = async name => {
+      try {
+        return fetchPokemonFight(name);
+      } catch (error) {
+        console.error(`Error fetching ${name}:`, error);
+        return null;
+      }
+    };
+    const ai = await fetchPokemon(Math.floor(Math.random() * 386) + 1, false);
+    setAiPokemon(ai);
+  };
 
   // Handle AI move selection
   useEffect(() => {
@@ -89,41 +98,52 @@ function Game() {
   // Handle turn execution
   useEffect(() => {
     if (isPlayerMoveLocked && isAiMoveLocked && playerPokemon && aiPokemon) {
-      // Create copies to avoid direct state mutation
-      const playerCopy = { ...playerPokemon };
-      const aiCopy = { ...aiPokemon };
+      const executeTurn = async () => {
+        if (playerPokemon.speed > aiPokemon.speed) {
+          // Player attacks first
 
-      // Determine turn order
-      if (playerCopy.speed > aiCopy.speed) {
-        calculateDamage(playerCopy, aiCopy, playerMove);
-        if (aiCopy.hp > 0) {
-          calculateDamage(aiCopy, playerCopy, aiMove);
+          triggerPlayerAnimation();
+          // await new Promise(resolve => setTimeout(resolve, 600));
+          calculateDamage(playerPokemon, aiPokemon, playerMove);
+          await new Promise(resolve => setTimeout(resolve, 600));
+
+          if (aiPokemon.hp > 0) {
+            // AI attacks back
+            triggerAiAnimation();
+            // await new Promise(resolve => setTimeout(resolve, 600));
+            calculateDamage(aiPokemon, playerPokemon, aiMove);
+            await new Promise(resolve => setTimeout(resolve, 600));
+          }
+        } else {
+          // AI attacks first
+          triggerAiAnimation();
+          // await new Promise(resolve => setTimeout(resolve, 600));
+          calculateDamage(aiPokemon, playerPokemon, aiMove);
+          await new Promise(resolve => setTimeout(resolve, 600));
+
+          if (playerPokemon.hp > 0) {
+            // Player attacks back
+            triggerPlayerAnimation();
+            // await new Promise(resolve => setTimeout(resolve, 600));
+            calculateDamage(playerPokemon, aiPokemon, playerMove);
+            await new Promise(resolve => setTimeout(resolve, 600));
+          }
         }
-      } else {
-        calculateDamage(aiCopy, playerCopy, aiMove);
-        if (playerCopy.hp > 0) {
-          calculateDamage(playerCopy, aiCopy, playerMove);
-        }
-      }
 
-      // Update state
-      setPlayerPokemon(playerCopy);
-      setAiPokemon(aiCopy);
+        setPlayerMove(null);
+        setAiMove(null);
+        setIsPlayerMoveLocked(false);
+        setIsAiMoveLocked(false);
 
-      // Reset moves
-      setPlayerMove(null);
-      setAiMove(null);
-      setIsPlayerMoveLocked(false);
-      setIsAiMoveLocked(false);
+        if (playerPokemon.hp <= 0) setWinner('ai');
+        if (aiPokemon.hp <= 0) setWinner('player');
+      };
 
-      // Check for winner
-      if (playerCopy.hp <= 0) setWinner('ai');
-      if (aiCopy.hp <= 0) setWinner('player');
+      executeTurn();
     }
   }, [isPlayerMoveLocked, isAiMoveLocked]);
 
   // Damage calculation function
-  // Modified damage calculation
   const calculateDamage = (attacker, defender, move) => {
     // Always use attack stat (simplified)
     const attackStat = attacker.attack;
@@ -139,53 +159,58 @@ function Game() {
 
     // Calculate damage
     const baseDamage = Math.floor(Math.random() * 6) + 3;
-    const damage = Math.floor((attackStat / defenseStat) * (baseDamage + effectiveness) * effectiveness);
+    const damage = Math.floor((attackStat / defenseStat) * (baseDamage + effectiveness) * effectiveness + 1);
     console.log(
       `complete ${damage}, attackStatattackStat ${attackStat}, defenseStat ${defenseStat}, baseDamage ${baseDamage}, effectiveness ${effectiveness}`
     );
 
     // Apply damage
     defender.hp = Math.max(0, defender.hp - damage);
-
-    // Log effectiveness
-    logEffectiveness(move.name, effectiveness);
-
-    // Add to battle log
-    setBattleLog(prev => [...prev, `${attacker.name} used ${move.name}! (${damage} damage)`]);
   };
 
-  // Effectiveness logging
-  const logEffectiveness = (moveName, effectiveness) => {
-    let message;
-    if (effectiveness > 1) {
-      message = `Super effective! (${effectiveness}x)`;
-    } else if (effectiveness < 1 && effectiveness > 0) {
-      message = `Not very effective... (${effectiveness}x)`;
-    } else if (effectiveness === 0) {
-      message = `No effect!`;
-    } else {
-      message = `Hit!`;
+  useEffect(() => {
+    if (winner === 'ai' || winner === 'player') {
+      console.log(`Winner is ${winner === 'ai' ? 'AI' : 'Player'}`);
+      setTimeout(() => {
+        if (winner === 'player') {
+          resetGame();
+        }
+      }, 1500);
     }
+  }, [winner]);
 
-    setBattleLog(prev => [...prev, `${moveName}: ${message}`]);
+  // Reset game
+  const resetGame = () => {
+    if (playerPokemon) setPlayerPokemon({ ...playerPokemon, hp: playerPokemon.maxHp });
+    nextAiPokemon();
+    setTimeout(() => {
+      setPlayerMove(null);
+      setAiMove(null);
+      setIsPlayerMoveLocked(false);
+      setIsAiMoveLocked(false);
+      setWinner(null);
+      setBattleLog([]);
+    }, 300);
+  };
+
+  const endGame = () => {
+    console.log('Game ended');
+    setGameStarted(false);
+    // setSelectedPokemon(null);
+    setPlayerPokemon(null);
+    setAiPokemon(null);
+    setIsLoading(true);
+    setPlayerMove(null);
+    setAiMove(null);
+    setIsPlayerMoveLocked(false);
+    setIsAiMoveLocked(false);
+    setWinner(null);
   };
 
   // Player move selection handler
   const handlePlayerMove = move => {
     setPlayerMove(move);
     setIsPlayerMoveLocked(true);
-  };
-
-  // Reset game
-  const resetGame = () => {
-    if (playerPokemon) setPlayerPokemon({ ...playerPokemon, hp: playerPokemon.maxHp });
-    if (aiPokemon) setAiPokemon({ ...aiPokemon, hp: aiPokemon.maxHp });
-    setPlayerMove(null);
-    setAiMove(null);
-    setIsPlayerMoveLocked(false);
-    setIsAiMoveLocked(false);
-    setWinner(null);
-    setBattleLog([]);
   };
 
   // Context value
@@ -196,20 +221,37 @@ function Game() {
     winner,
     handlePlayerMove,
     resetGame,
-    isPlayerMoveLocked
+    isPlayerMoveLocked,
+    playerAnimation,
+    aiAnimation,
+    endGame
   };
 
-  if (isLoading) {
-    return <div className="text-center mt-10">Loading Pokémon...</div>;
+  if (!gameStarted) {
+    return <IntroScreen onStartGame={handleStartGame} />;
   }
-  //end ai
-  // const [playerPokemon, setPlayerPokemon] = useState(null);
+
+  if (isLoading) {
+    return (
+      <>
+        <div className="w-[1200px] h-[630px] mx-auto mt-10 relative tracking-wider pixelated z-1">
+          <img src={IntroBackground} alt="" className="w-[1200px] h-[630px] absolute top-0 left-0" />
+          <div
+            style={{ fontFamily: 'PokemonFont, sans-serif' }}
+            className="absolute bottom-90 left-110 text-center text-4xl mt-10 z-2"
+          >
+            Loading Game...
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <Context.Provider value={contextValue}>
       <div
         style={{ fontFamily: 'PokemonFont, sans-serif' }}
-        className="w-[1200px] h-[800px] mx-auto mt-10 relative tracking-wider "
+        className="w-[1200px] h-[800px] mx-auto mt-10 relative tracking-wider"
       >
         <GameVisual />
         <BattleMenu />

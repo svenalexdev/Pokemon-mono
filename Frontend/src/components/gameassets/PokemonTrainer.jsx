@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import Context from '../../utils/Context';
+import { transformPokemonName } from '../../utils/transformPokemonName';
 
 const pokemonAnimation = myPokemonName => {
   const enemyUrl = `https://play.pokemonshowdown.com/sprites/gen5ani-back/${myPokemonName}.gif`;
@@ -8,8 +9,15 @@ const pokemonAnimation = myPokemonName => {
 };
 
 function PokemonTrainer() {
-  const { playerPokemon } = useContext(Context);
-  return <div className="">{pokemonAnimation(playerPokemon.name)}</div>;
+  const { playerPokemon, playerAnimation, aiAnimation, winner } = useContext(Context);
+
+  return (
+    <div className={`${playerAnimation ? 'translate-x-20' : ''} ${aiAnimation ? 'opacity-0' : ''}`}>
+      <div className={`${winner === 'ai' ? 'translate-y-20 opacity-0 transition-all duration-300 ease-in-out' : ''}`}>
+        {pokemonAnimation(transformPokemonName(playerPokemon.name))}
+      </div>
+    </div>
+  );
 }
 
 export default PokemonTrainer;
