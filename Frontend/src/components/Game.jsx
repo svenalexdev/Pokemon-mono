@@ -6,6 +6,7 @@ import { typeEffective } from '../utils/battleLogic';
 import { fetchPokemonFight } from '../utils/fetchData';
 import IntroScreen from './gameassets/IntroScreen';
 import IntroBackground from '../assets/IntroBackground.png';
+import { getBattleHistory } from '../data';
 
 function Game() {
   const [playerPokemon, setPlayerPokemon] = useState(null);
