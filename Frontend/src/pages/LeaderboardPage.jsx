@@ -1,29 +1,74 @@
 import { useState, useEffect } from 'react';
 
 function LeaderboardPage() {
-  const leaderboardData = [
-    {
-      position: 1,
-      player: 'Ash',
-      pokemon: 'Pikachu',
-      streak: 12,
-      rival: 'Charizard'
-    },
-    {
-      position: 2,
-      player: 'Misty',
-      pokemon: 'Starmie',
-      streak: 10,
-      rival: 'Bulbasaur'
-    },
-    {
-      position: 3,
-      player: 'Brock',
-      pokemon: 'Onix',
-      streak: 9,
-      rival: 'Pidgeotto'
-    }
-  ];
+//   const leaderboardData = [
+//     {
+//       position: 1,
+//       player: 'Ash',
+//       pokemon: 'Pikachu',
+//       streak: 12,
+//       rival: 'Charizard'
+//     },
+//     {
+//       position: 2,
+//       player: 'Misty',
+//       pokemon: 'Starmie',
+//       streak: 10,
+//       rival: 'Bulbasaur'
+//     },
+//     {
+//       position: 3,
+//       player: 'Brock',
+//       pokemon: 'Onix',
+//       streak: 9,
+//       rival: 'Pidgeotto'
+//     }
+//   ];
+
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+      const res = await fetch('/leaderboard');
+      if (!res.ok) throw new Error('Failed to fetch leaderboard');
+      const data = await res.json();
+      setLeaderboard(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLeaderboard();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6">
+        <p className="text-gray-700">Loading leaderboard...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6">
+        <p className="text-red-600">Error: {error}</p>
+      </div>
+    );
+  }
+
+  if (leaderboard.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-6 text-black">
+        <h1 className="text-2xl font-semibold mb-4">Leaderboard</h1>
+        <p className="text-gray-700">No entries yet — play some battles to get a top position!</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 text-black">
@@ -40,13 +85,13 @@ function LeaderboardPage() {
             </tr>
           </thead>
           <tbody>
-            {leaderboardData.map((entry, index) => (
-              <tr className="">
-                <td className="py-2 px-4">{entry.position}</td>
-                <td className="py-2 px-4">{entry.player}</td>
-                <td className="py-2 px-4">{entry.pokemon}</td>
-                <td className="py-2 px-4">{entry.streak}</td>
-                <td className="py-2 px-4">{entry.rival}</td>
+            {leaderboard.map((entry, index) => (
+              <tr key={index}>
+                <td className="py-2 px-4">{index + 1}</td>
+                <td className="py-2 px-4">{entry.username}</td>
+                <td className="py-2 px-4">{entry.playerPokemon}</td>
+                <td className="py-2 px-4">{entry.winningStreak}</td>
+                <td className="py-2 px-4">{entry.rivalPokemon}</td>
               </tr>
             ))}
           </tbody>
