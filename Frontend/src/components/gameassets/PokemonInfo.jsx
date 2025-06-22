@@ -37,14 +37,14 @@ function PokemonInfo() {
 
       <div
         className={`
-        absolute bottom-full left-0 w-full bg-blue-100 border-2 border-blue-300 rounded-b-lg
+        absolute bottom-full left-17 w-[80%] bg-[#F8F8D8] border-5 border-[#506860] rounded-t-lg
         overflow-hidden transition-all duration-300 ease-in-out
         ${isHovered ? 'max-h-52 opacity-100' : 'max-h-0 opacity-0'}
       `}
       >
         <div className="p-4">
           <h3 className="font-bold text-lg">Additional Info</h3>
-          <p>Type: {playerPokemon.types}</p>
+          <p>Type: {playerPokemon.types.join(', ')}</p>
           <p>Speed: {playerPokemon.speed}</p>
           <p>Attack: {playerPokemon.attack}</p>
           <p>Defense: {playerPokemon.defense}</p>

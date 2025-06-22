@@ -13,7 +13,7 @@ function PokemonTrainer() {
 
   return (
     <div className={`${playerAnimation ? 'translate-x-20' : ''} ${aiAnimation ? 'opacity-0' : ''}`}>
-      <div className={`${winner === 'ai' ? 'translate-y-70 opacity-0 transition-all duration-300 ease-in-out' : ''}`}>
+      <div className={`${winner === 'ai' ? 'translate-y-20 opacity-0 transition-all duration-300 ease-in-out' : ''}`}>
         {pokemonAnimation(transformPokemonName(playerPokemon.name))}
       </div>
     </div>

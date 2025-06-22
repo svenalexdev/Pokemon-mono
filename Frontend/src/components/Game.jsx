@@ -5,9 +5,9 @@ import BattleMenu from './gameassets/BattleMenu';
 import { typeEffective } from '../utils/battleLogic';
 import { fetchPokemonFight } from '../utils/fetchData';
 import IntroScreen from './gameassets/IntroScreen';
+import IntroBackground from '../assets/IntroBackground.png';
 
 function Game() {
-  //ai
   const [playerPokemon, setPlayerPokemon] = useState(null);
   const [playerName, setPlayerName] = useState('');
   const [playerPokemonName, setPlayerPokemonName] = useState('');
@@ -172,9 +172,7 @@ function Game() {
     if (winner === 'ai' || winner === 'player') {
       console.log(`Winner is ${winner === 'ai' ? 'AI' : 'Player'}`);
       setTimeout(() => {
-        if (winner === 'ai') {
-          endGame();
-        } else {
+        if (winner === 'player') {
           resetGame();
         }
       }, 1500);
@@ -225,7 +223,8 @@ function Game() {
     resetGame,
     isPlayerMoveLocked,
     playerAnimation,
-    aiAnimation
+    aiAnimation,
+    endGame
   };
 
   if (!gameStarted) {
@@ -233,9 +232,20 @@ function Game() {
   }
 
   if (isLoading) {
-    return <div className="text-center mt-10">Loading Pokémon...</div>;
+    return (
+      <>
+        <div className="w-[1200px] h-[630px] mx-auto mt-10 relative tracking-wider pixelated z-1">
+          <img src={IntroBackground} alt="" className="w-[1200px] h-[630px] absolute top-0 left-0" />
+          <div
+            style={{ fontFamily: 'PokemonFont, sans-serif' }}
+            className="absolute bottom-90 left-110 text-center text-4xl mt-10 z-2"
+          >
+            Loading Game...
+          </div>
+        </div>
+      </>
+    );
   }
-  //end ai
 
   return (
     <Context.Provider value={contextValue}>

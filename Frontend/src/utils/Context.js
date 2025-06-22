@@ -22,7 +22,8 @@ const Context = createContext({
   setIsSearching: () => {},
   error: null,
   setError: () => {},
-  handleStartGame: () => {}
+  handleStartGame: () => {},
+  endGame: () => {}
 });
 
 export default Context;

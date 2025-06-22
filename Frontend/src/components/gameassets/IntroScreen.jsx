@@ -3,6 +3,7 @@ import { fetchPokemonFight } from '../../utils/fetchData';
 import ProfEich from '../../assets/ProfEich.png';
 import Ground from '../../assets/StandingGround.png';
 import Pokeball from '../../assets/Pokeball.png';
+import IntroBackground from '../../assets/IntroBackground.png';
 import { transformPokemonName } from '../../utils/transformPokemonName';
 
 function IntroScreen({ onStartGame }) {
@@ -100,14 +101,17 @@ function IntroScreen({ onStartGame }) {
   };
 
   return (
-    <div className="w-[1200px] h-[630px] mx-auto mt-10 relative tracking-wider pixelated bg-white">
+    <div className="w-[1200px] h-[630px] mx-auto mt-10 relative tracking-wider pixelated z-1">
+      <img src={IntroBackground} alt="" className="w-[1200px] h-[630px] absolute right-0 bottom-0 -z-1" />
+      <div className="absolute -z-1 left-3 top-5 w-[404px] h-[590px] rounded-xl bg-white"></div>
       <div className=" p-8 mx-auto" style={{ fontFamily: 'PokemonFont, sans-serif' }}>
-        <h1 className="text-2xl font-bold mb-4 uppercase">
-          Hello!<br></br> Welcome to PokeBrawl!
+        <h1 className="text-2xl mt-1 font-bold mb-4 uppercase">
+          Hello! Welcome <br></br> to PokeBrawl!
         </h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4 w-90">
-            <img src={Ground} alt="" className="absolute right-10 bottom-6 w-90" />
+            <img src={Ground} alt="" className="absolute right-10 bottom-8 w-80" />
+            <img src={Ground} alt="" className="absolute right-103 bottom-8 w-80" />
             <img src={ProfEich} alt="" className="absolute right-17 bottom-18 w-70" />
             <img src={Pokeball} alt="" className="absolute right-72 bottom-67 w-12" />
 
@@ -117,14 +121,14 @@ function IntroScreen({ onStartGame }) {
               type="text"
               value={playerName}
               onChange={e => setPlayerName(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded bg-white"
               required
             />
             {/* {playerName && (
               <p className="text-sm text-gray-500 mt-1">Welcome back, {playerName}! Choose your Pokémon.</p>
             )} */}
           </div>
-          <div className="mb-6 w-90 relative">
+          <div className="mb-4 w-90 relative">
             <label className="block mb-2 text-xl uppercase">What Pokemon do you want to fight with?</label>
             <input
               type="text"
@@ -135,8 +139,8 @@ function IntroScreen({ onStartGame }) {
                   setSelectedPokemon(null);
                 }
               }}
-              placeholder="Search Pokémon..."
-              className="w-full p-2 border rounded"
+              placeholder="Search Pokemon..."
+              className="w-full p-2 border rounded bg-white"
               required
             />
 
@@ -165,7 +169,7 @@ function IntroScreen({ onStartGame }) {
               type="button"
               onClick={handleRandomPokemon}
               disabled={isSearching}
-              className={`w-90 py-2 px-4 mt-4 rounded ${
+              className={`w-90 py-2 px-4 mt-4 rounded cursor-pointer ${
                 isSearching ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-500 hover:bg-gray-600 text-white'
               }`}
             >
@@ -188,7 +192,7 @@ function IntroScreen({ onStartGame }) {
                   selectedPokemon.name
                 )}.gif`}
                 alt=""
-                className="absolute w-90 h-50 object-contain right-105 bottom-10  "
+                className="absolute w-90 h-50 object-contain right-98 bottom-15   "
               />
             </div>
           )}
@@ -196,7 +200,7 @@ function IntroScreen({ onStartGame }) {
           <button
             type="submit"
             disabled={!playerName || !selectedPokemon}
-            className={`w-90 py-2 px-4 rounded ${
+            className={`w-90 py-2 px-4 rounded cursor-pointer ${
               playerName && selectedPokemon
                 ? 'bg-red-500 hover:bg-red-600 text-white'
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
