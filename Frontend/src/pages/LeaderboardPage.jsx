@@ -1,29 +1,40 @@
 import { useState, useEffect } from 'react';
 
 function LeaderboardPage() {
-  const leaderboardData = [
-    {
-      position: 1,
-      player: 'Ash',
-      pokemon: 'Pikachu',
-      streak: 12,
-      rival: 'Charizard'
-    },
-    {
-      position: 2,
-      player: 'Misty',
-      pokemon: 'Starmie',
-      streak: 10,
-      rival: 'Bulbasaur'
-    },
-    {
-      position: 3,
-      player: 'Brock',
-      pokemon: 'Onix',
-      streak: 9,
-      rival: 'Pidgeotto'
-    }
-  ];
+//   const leaderboardData = [
+//     {
+//       position: 1,
+//       player: 'Ash',
+//       pokemon: 'Pikachu',
+//       streak: 12,
+//       rival: 'Charizard'
+//     },
+//     {
+//       position: 2,
+//       player: 'Misty',
+//       pokemon: 'Starmie',
+//       streak: 10,
+//       rival: 'Bulbasaur'
+//     },
+//     {
+//       position: 3,
+//       player: 'Brock',
+//       pokemon: 'Onix',
+//       streak: 9,
+//       rival: 'Pidgeotto'
+//     }
+//   ];
+
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      const res = await fetch('/leaderboard');
+      const data = await res.json();
+      setLeaderboard(data);
+    };
+    fetchLeaderboard();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 text-black">
@@ -40,13 +51,13 @@ function LeaderboardPage() {
             </tr>
           </thead>
           <tbody>
-            {leaderboardData.map((entry, index) => (
-              <tr className="">
-                <td className="py-2 px-4">{entry.position}</td>
-                <td className="py-2 px-4">{entry.player}</td>
-                <td className="py-2 px-4">{entry.pokemon}</td>
-                <td className="py-2 px-4">{entry.streak}</td>
-                <td className="py-2 px-4">{entry.rival}</td>
+            {leaderboard.map((entry, index) => (
+              <tr key={index}>
+                <td className="py-2 px-4">{index + 1}</td>
+                <td className="py-2 px-4">{entry.username}</td>
+                <td className="py-2 px-4">{entry.playerPokemon}</td>
+                <td className="py-2 px-4">{entry.winningStreak}</td>
+                <td className="py-2 px-4">{entry.rivalPokemon}</td>
               </tr>
             ))}
           </tbody>
