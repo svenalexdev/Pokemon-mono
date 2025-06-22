@@ -5,6 +5,7 @@ import PokedexPage from './pages/PokedexPage';
 import LoginPage from './pages/LoginPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import HowToPlay from './pages/HowToPlay';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="leaderboard" element={<LeaderboardPage />} />
           <Route path="pokedex" element={<PokedexPage />} />
           <Route path="howtoplay" element={<HowToPlay />} />
+          <Route path="register" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
     </>
