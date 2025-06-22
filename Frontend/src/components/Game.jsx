@@ -31,6 +31,7 @@ function Game() {
     setPlayerName(name);
     setPlayerPokemonName(pokemon);
     setGameStarted(true);
+    localStorage.setItem('winningStreak', 1);
   };
 
   // Animation Trigger for attacks
