@@ -26,4 +26,21 @@ const battleHistorySchema = z.object({
     bestBrawler: z.string().min(1, "Best Pokemon is required"),
 });
 
-export { userSchema, leaderboardSchema, battleHistorySchema, signInSchema };
+const battleResultSchema = z.object({
+    userId: z.string().optional(), // optional for guests
+    isGuest: z.boolean(),
+    username: z.string().min(1),
+    playerPokemon: z.string().min(1),
+    rivalPokemon: z.string().min(1),
+    didWin: z.boolean(),
+    winningStreak: z.number().int().nonnegative(),
+    bestBrawler: z.string().min(1),
+});
+
+export {
+    userSchema,
+    leaderboardSchema,
+    battleHistorySchema,
+    battleResultSchema, 
+    signInSchema,
+};
