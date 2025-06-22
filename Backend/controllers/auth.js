@@ -42,10 +42,10 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
     const {
-        sanitizedBody: { email, password },
+        sanitizedBody: { username, password },
     } = req;
 
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ username }).select("+password");
 
     if (!user) throw new Error("User not found", { cause: 404 });
 
@@ -74,4 +74,10 @@ const me = async (req, res) => {
     res.json(user);
 };
 
-export { signup, signin, me };
+const signout = async (req, res) => {
+    res.clearCookie("token");
+
+    res.json({ message: "You have signed out." });
+};
+
+export { signup, signin, me, signout };

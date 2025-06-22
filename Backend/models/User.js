@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import BattleHistory from "./BattleHistory.js";
 
 const userSchema = new Schema(
     {
@@ -23,5 +24,14 @@ const userSchema = new Schema(
     },
     { timestamps: true }
 );
+
+// Middleware: if user is deleted, delete battleHistory too
+userSchema.pre("findOneAndDelete", async function (next) {
+    const user = await this.model.findOne(this.getFilter());
+    if (user) {
+        await BattleHistory.deleteOne({ userId: user._id });
+    }
+    next();
+});
 
 export default model("User", userSchema);

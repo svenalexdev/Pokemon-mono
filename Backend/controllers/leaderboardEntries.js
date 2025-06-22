@@ -1,4 +1,4 @@
-import Leaderboard from "../models/Leaderboard";
+import Leaderboard from "../models/Leaderboard.js";
 
 const getLeaderboard = async (req, res) => {
     const topPlayers = await Leaderboard.find()
