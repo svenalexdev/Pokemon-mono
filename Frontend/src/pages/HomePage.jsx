@@ -5,12 +5,20 @@ import { useNavigate } from 'react-router';
 function Homepage() {
   const navigate = useNavigate();
 
+  const goToLoginPage = () => {
+    navigate('login');
+  };
+
+  const goToLeaderboardPage = () => {
+    navigate('leaderboard');
+  };
+
   const goToPokedex = () => {
     navigate('pokedex');
   };
 
-  const goToLoginPage = () => {
-    navigate('login');
+  const goToHowToPlay = () => {
+    navigate('howtoplay');
   };
 
   return (
@@ -19,11 +27,18 @@ function Homepage() {
         <button onClick={goToLoginPage} className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600">
           Login
         </button>
-        <button className="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600">Leaderboard</button>
+        <button
+          onClick={goToLeaderboardPage}
+          className="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600"
+        >
+          Leaderboard
+        </button>
         <button onClick={goToPokedex} className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600">
           Pokedex
         </button>
-        <button className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600">How to Play</button>
+        <button onClick={goToHowToPlay} className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600">
+          How to Play
+        </button>
       </div>
       <Game />
     </div>
