@@ -30,10 +30,10 @@ function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-100 to-blue-200 flex items-center justify-center text-black p-4">
       <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md relative">
-        <h1 className="text-2xl font-bold mb-4">Login to Your Account</h1>
+        <h1 className="text-2xl font-bold mb-4 text-left">Login to Your Account</h1>
         <button
           onClick={() => navigate('/')}
-          className="absolute top-6 right-4 bg-indigo-600 text-white px-3 py-1 text-sm rounded hover:bg-indigo-700"
+          className="absolute top-6 right-6 bg-indigo-600 text-white px-3 py-1 text-sm rounded hover:bg-indigo-700"
         >
           Back Home
         </button>
@@ -59,9 +59,15 @@ function LoginPage() {
             disabled={loading}
             className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
+        <p className="mt-4 text-center text-sm">
+          Don't have an account?{' '}
+          <button className="text-indigo-600 hover:underline" onClick={() => navigate('/register')}>
+            Sign up
+          </button>
+        </p>
       </div>
     </div>
   );
