@@ -16,18 +16,21 @@ function PokedexPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-200 text-black flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-200 text-black flex flex-col p-6 pb-0">
       <div className="w-[1700px] mx-auto">
-        <div className="h-16 px-6 flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Pokédex</h1>
+        <img src="/PokeBrawlLogo.png" alt="" className="mx-auto w-70 drop-shadow-xl mb-5" />
+        <div className="flex justify-start items-center">
           <button
             onClick={() => navigate('/')}
-            className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+            className="bg-indigo-600 text-white mx-auto py-2 px-4 rounded-md hover:bg-indigo-700 cursor-pointer"
           >
             Back to Home
           </button>
         </div>
-        <div className="flex flex-1s h-[calc(100vh-4rem)]">
+        <h1 className="text-2xl mt-6 font-semibold mb-3 text-center" style={{ fontFamily: 'PokemonFont, sans-serif' }}>
+          Pokedex
+        </h1>
+        <div className="flex flex-1s h-[calc(100vh-13rem)]">
           <div className="w-1/2 p-4 overflow-y-auto border-r border-blue-300">
             {pokemonList.map((pokemon, index) => (
               <button
@@ -38,7 +41,7 @@ function PokedexPage() {
                 <img
                   src={pokemon.sprites.front_default}
                   alt={pokemon.name}
-                  className="h-50 mb-2 mr-4 object-contain mx-auto pixelated"
+                  className="h-30  ml-10 mr-4 object-contain mx-auto pixelated"
                 />
                 <div className="flex-1">
                   <p className="text-lg text-gray-600"># {pokemon.id}</p>

@@ -24,17 +24,49 @@ function LeaderboardPage() {
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-b from-blue-100 to-purple-200 min-h-screen flex items-center justify-center p-6">
-        <p className="text-gray-700">Loading leaderboard...</p>
+      <div className="text-center bg-gradient-to-b from-blue-100 to-purple-200 min-h-screen flex items-center justify-center p-6">
+        <div>
+          <img
+            src="https://play.pokemonshowdown.com/sprites/gen5ani/snorlax.gif"
+            alt=""
+            className="mx-auto w-40 max-h-40 pixelated object-contain"
+          />
+          <p className="text-gray-700 text-2xl">Loading leaderboard...</p>
+          <p className="text-gray-700 text-2xl">Waking up the Backend, this may take a short moment</p>
+          <button
+            onClick={() => navigate('/')}
+            className="bg-indigo-600 text-white mx-auto py-2 px-4 mt-2 rounded-md hover:bg-indigo-700 cursor-pointer"
+          >
+            Back to Home
+          </button>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
-        <p className="text-red-600">Error: {error}</p>
+      <div className="text-center bg-gradient-to-b from-blue-100 to-purple-200 min-h-screen flex items-center justify-center p-6">
+        <div>
+          <img
+            src="https://play.pokemonshowdown.com/sprites/gen5ani/pikachu.gif"
+            alt=""
+            className="mx-auto ml-17 w-40 max-h-40 pixelated object-contain"
+          />
+
+          <p className="text-gray-700 text-2xl">Error loading leaderboard</p>
+          <p className="text-gray-700 text-2xl"> Error: {error}</p>
+          <button
+            onClick={() => navigate('/')}
+            className="bg-indigo-600 text-white mx-auto py-2 px-4 mt-2 rounded-md hover:bg-indigo-700 cursor-pointer"
+          >
+            Back to Home
+          </button>
+        </div>
       </div>
+      // <div className="min-h-screen flex items-center justify-center p-6">
+      //   <p className="text-red-600">Error: {error}</p>
+      // </div>
     );
   }
 
@@ -48,13 +80,10 @@ function LeaderboardPage() {
   }
 
   return (
-    <div
-      style={{ fontFamily: 'PokemonFont, sans-serif' }}
-      className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-200 text-black flex flex-col"
-    >
-      <div className="max-w-4xl mx-auto w-full px-4 py-6">
-        <h1 className="text-2xl font-semibold mb-6 text-center">Leaderboard</h1>
-        <div className="h-16 flex justify-start items-center">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-200 text-black flex flex-col p-6">
+      <img src="/PokeBrawlLogo.png" alt="" className="mx-auto w-70 drop-shadow-xl mb-5" />
+      <div className="max-w-4xl mx-auto w-full px-4">
+        <div className="flex justify-start items-center">
           <button
             onClick={() => navigate('/')}
             className="bg-indigo-600 text-white mx-auto py-2 px-4 rounded-md hover:bg-indigo-700 cursor-pointer"
@@ -62,7 +91,12 @@ function LeaderboardPage() {
             Back to Home
           </button>
         </div>
-        <div className="overflow-x-auto">
+        <h1 className="text-2xl mt-6 font-semibold  text-center" style={{ fontFamily: 'PokemonFont, sans-serif' }}>
+          Leaderboard
+        </h1>
+        <p className='"text-xl mt-0 text-center font-semibold '>Hardmode after Round 10, no HP refill</p>
+
+        <div className="overflow-x-auto mt-4" style={{ fontFamily: 'PokemonFont, sans-serif' }}>
           <table className="min-w-full bg-white rounded-md shadow-sm">
             <thead>
               <tr className="bg-gray-200 text-gray-700">
