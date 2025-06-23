@@ -20,5 +20,5 @@ app.use("*splat", (req, res) => res.status(404).json({ error: "Not found" }));
 app.use(errorHandler);
 
 app.listen(port, () =>
-    console.log(`Server listening on http://localhost:${port}`)
+  console.log(`Server listening on http://localhost:${port}/`)
 );

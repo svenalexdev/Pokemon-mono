@@ -9,7 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 
 function App() {
   return (
-    <>
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -20,7 +20,7 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

@@ -104,7 +104,7 @@ function IntroScreen({ onStartGame }) {
   };
 
   return (
-    <div className="w-[1200px] h-[630px] mx-auto mt-10 relative tracking-wider pixelated z-1 shadow-2xl">
+    <div className="w-[1200px] h-[630px] mx-auto mt-5 relative tracking-wider pixelated z-1 shadow-2xl">
       <img src={IntroBackground} alt="" className="w-[1200px] h-[630px] absolute right-0 bottom-0 -z-1" />
       <div className="absolute -z-1 left-3 top-5 w-[404px] h-[210px] rounded-xl bg-white"></div>
       <div className="absolute -z-1 left-3 bottom-5 w-[404px] h-[315px] rounded-xl bg-white"></div>
@@ -212,8 +212,8 @@ function IntroScreen({ onStartGame }) {
           <button
             type="submit"
             disabled={!playerName || !selectedPokemon}
-            className={`text-2xl absolute right-98 top-5 w-90 py-4 px-4 rounded cursor-pointer ${
-              playerName && selectedPokemon ? 'bg-red-500 hover:bg-red-600 text-white' : 'opacity-0 cursor-not-allowed'
+            className={`text-2xl absolute right-98 top-5 w-90 py-4 px-4 rounded  ${
+              playerName && selectedPokemon ? 'bg-red-500 hover:bg-red-600 text-white cursor-pointer' : 'opacity-0 '
             }`}
           >
             Start Battle!

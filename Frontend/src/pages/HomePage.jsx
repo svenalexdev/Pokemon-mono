@@ -1,8 +1,16 @@
+import { useEffect } from 'react';
 import Game from '../components/Game';
-
+import { getLeaderboardEntry } from '../data';
 import { useNavigate } from 'react-router';
 
 function Homepage() {
+  useEffect(() => {
+    const leaderboardFirstConnect = async () => {
+      const results = await getLeaderboardEntry();
+      console.log('Starting Connection to API for Leaderboard, Result should be array of objects:', results);
+    };
+    leaderboardFirstConnect();
+  }, []);
   const navigate = useNavigate();
 
   const goToLoginPage = () => {

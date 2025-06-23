@@ -16,7 +16,8 @@ export const getLeaderboardEntry = async () => {
 };
 
 export const createLeaderboardEntry = async gameData => {
-  const res = await fetch(baseURL, {
+  console.log(baseURL);
+  const res = await fetch(`${baseURL}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -31,6 +32,7 @@ export const createLeaderboardEntry = async gameData => {
     throw new Error(errorData.error);
   }
   const data = await res.json();
+  console.log(data);
   return data;
 };
 

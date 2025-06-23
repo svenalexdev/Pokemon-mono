@@ -24,7 +24,7 @@ function LeaderboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
+      <div className="bg-gradient-to-b from-blue-100 to-purple-200 min-h-screen flex items-center justify-center p-6">
         <p className="text-gray-700">Loading leaderboard...</p>
       </div>
     );
@@ -57,7 +57,7 @@ function LeaderboardPage() {
         <div className="h-16 flex justify-start items-center">
           <button
             onClick={() => navigate('/')}
-            className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 cursor-pointer"
+            className="bg-indigo-600 text-white mx-auto py-2 px-4 rounded-md hover:bg-indigo-700 cursor-pointer"
           >
             Back to Home
           </button>

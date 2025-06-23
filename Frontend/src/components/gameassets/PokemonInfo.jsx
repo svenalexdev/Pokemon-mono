@@ -5,7 +5,7 @@ import Context from '../../utils/Context';
 import { useEffect } from 'react';
 
 function PokemonInfo() {
-  const { playerPokemon, winner } = useContext(Context);
+  const { playerPokemon, winner, setHpToOne } = useContext(Context);
   const [isHovered, setIsHovered] = useState(false);
   const [level, setLevel] = useState(1);
 
@@ -61,6 +61,12 @@ function PokemonInfo() {
           <p>Defense: {playerPokemon.defense}</p>
           <p>Special-Attack: {playerPokemon.specialAttack}</p>
           <p>Special-Defense: {playerPokemon.specialDefense}</p>
+          <button
+            onClick={setHpToOne}
+            className="absolute text-xs top-2 right-2 px-1 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+          >
+            Kill<br></br>Switch
+          </button>
         </div>
       </div>
     </div>

@@ -53,12 +53,14 @@ function Game() {
   }, [playerName]);
   useEffect(() => {
     if (playerPokemonName) {
-      localStorage.setItem('playerPokemon', playerPokemonName);
+      const capitalizedName = playerPokemonName.charAt(0).toUpperCase() + playerPokemonName.slice(1);
+      localStorage.setItem('playerPokemon', capitalizedName);
     }
   }, [playerPokemonName]);
   useEffect(() => {
     if (aiPokemon) {
-      localStorage.setItem('rivalPokemon', aiPokemon.name);
+      const capitalizedName = aiPokemon.name.charAt(0).toUpperCase() + aiPokemon.name.slice(1);
+      localStorage.setItem('rivalPokemon', capitalizedName);
     }
   }, [aiPokemon]);
 
@@ -207,19 +209,30 @@ function Game() {
     }, 300);
   };
 
+  // Killswitch
+  const setHpToOne = () => {
+    if (playerPokemon) {
+      setPlayerPokemon({
+        ...playerPokemon,
+        hp: 1 // Set HP to 1
+      });
+    }
+  };
+
   // Function when Player loses (executed in BattleMenu.jsx)
   const endGame = async () => {
     console.log('Game ended');
     // CRUD OPERATION FOR LOCAL STORAGE HERE
-    const userId = localStorage.getItem('userId');
+    // const userId = localStorage.getItem('userId');
     // if (!userId) {
     //   console.log('User not sign in');
     // } else {
     const resultsFight = {
       username: localStorage.getItem('username'),
       playerPokemon: localStorage.getItem('playerPokemon'),
-      winningStreak: localStorage.getItem('winningStreak'),
-      rivalPokemon: localStorage.getItem('rivalPokemon')
+      winningStreak: Number(localStorage.getItem('winningStreak')),
+      rivalPokemon: localStorage.getItem('rivalPokemon'),
+      isGuest: localStorage.getItem('isGuest') || true
     };
     await createLeaderboardEntry(resultsFight);
     // }
@@ -253,7 +266,8 @@ function Game() {
     isPlayerMoveLocked,
     playerAnimation,
     aiAnimation,
-    endGame
+    endGame,
+    setHpToOne
   };
 
   if (!gameStarted) {
@@ -264,7 +278,7 @@ function Game() {
   if (isLoading) {
     return (
       <>
-        <div className="w-[1200px] h-[630px] mx-auto mt-10 relative tracking-wider pixelated z-1">
+        <div className="w-[1200px] h-[630px] mx-auto mt-5 relative tracking-wider pixelated z-1">
           <img src={IntroBackground} alt="" className="w-[1200px] h-[630px] absolute top-0 left-0" />
           <div
             style={{ fontFamily: 'PokemonFont, sans-serif' }}
@@ -281,7 +295,7 @@ function Game() {
     <Context.Provider value={contextValue}>
       <div
         style={{ fontFamily: 'PokemonFont, sans-serif' }}
-        className="w-[1200px] h-[800px] mx-auto mt-10 relative tracking-wider shadow-2xl"
+        className="w-[1200px] h-[800px] mx-auto mt-5 relative tracking-wider shadow-2xl"
       >
         <GameVisual />
         <BattleMenu />
