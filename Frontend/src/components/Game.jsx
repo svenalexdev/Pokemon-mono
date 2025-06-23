@@ -182,10 +182,8 @@ function Game() {
     const baseDamage = Math.floor(Math.random() * 6) + 3;
     const damage = Math.floor((attackStat / defenseStat) * (baseDamage + effectiveness) * effectiveness + 1);
     console.log(
-      `complete ${damage}, attackStat ${attackStat}, defenseStat ${defenseStat}, baseDamage ${baseDamage}, effectiveness ${effectiveness}, isPhysical ${
-        (isPhysical, isSpecial)
-      }: ${move.type}
-      }`
+      `${attacker.name} dealt ${damage} Damage, effectiveness was x${effectiveness}, move: ${move.type}, isPhysical ${isPhysical}, isSpecial ${isSpecial}
+      `
     );
 
     // Apply damage
@@ -206,7 +204,12 @@ function Game() {
 
   // Reset game (actually next round if player wins)
   const resetGame = () => {
-    if (playerPokemon) setPlayerPokemon({ ...playerPokemon, hp: playerPokemon.maxHp });
+    const currentLevel = localStorage.getItem('winningStreak');
+    if (currentLevel >= 10) {
+      console.log('Real challenge starts, No HP refill');
+    } else {
+      if (playerPokemon) setPlayerPokemon({ ...playerPokemon, hp: playerPokemon.maxHp });
+    }
     nextAiPokemon();
     setTimeout(() => {
       setPlayerMove(null);
