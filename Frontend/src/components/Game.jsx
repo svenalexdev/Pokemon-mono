@@ -6,7 +6,7 @@ import { typeEffective } from '../utils/battleLogic';
 import { fetchPokemonFight } from '../utils/fetchData';
 import IntroScreen from './gameassets/IntroScreen';
 import IntroBackground from '../assets/IntroBackground.png';
-import { getBattleHistory } from '../data';
+import { createLeaderboardEntry } from '../data';
 
 function Game() {
   // Big mess of useStates (filter later?)
@@ -208,9 +208,22 @@ function Game() {
   };
 
   // Function when Player loses (executed in BattleMenu.jsx)
-  const endGame = () => {
+  const endGame = async () => {
     console.log('Game ended');
     // CRUD OPERATION FOR LOCAL STORAGE HERE
+    const userId = localStorage.getItem('userId');
+    // if (!userId) {
+    //   console.log('User not sign in');
+    // } else {
+    const resultsFight = {
+      username: localStorage.getItem('username'),
+      playerPokemon: localStorage.getItem('playerPokemon'),
+      winningStreak: localStorage.getItem('winningStreak'),
+      rivalPokemon: localStorage.getItem('rivalPokemon')
+    };
+    await createLeaderboardEntry(resultsFight);
+    // }
+
     localStorage.setItem('winningStreak', 1);
     setGameStarted(false);
     setPlayerPokemon(null);
