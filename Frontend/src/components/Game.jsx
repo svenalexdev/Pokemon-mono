@@ -161,8 +161,14 @@ function Game() {
 
   // Damage calculation function
   const calculateDamage = (attacker, defender, move) => {
-    const attackStat = attacker.attack;
-    const defenseStat = defender.defense;
+    const physicalTypes = ['normal', 'fighting', 'flying', 'poison', 'ground', 'rock', 'bug', 'ghost', 'steel'];
+    const specialTypes = ['fire', 'water', 'grass', 'electric', 'psychic', 'ice', 'dragon', 'dark'];
+
+    const isPhysical = physicalTypes.includes(move.type);
+    const isSpecial = specialTypes.includes(move.type);
+
+    const attackStat = isPhysical ? attacker.attack : attacker.specialAttack;
+    const defenseStat = isPhysical ? defender.defense : defender.specialDefense;
 
     // Calculate type effectiveness from utils/battleLogic.js
     let effectiveness = 1;
@@ -176,7 +182,10 @@ function Game() {
     const baseDamage = Math.floor(Math.random() * 6) + 3;
     const damage = Math.floor((attackStat / defenseStat) * (baseDamage + effectiveness) * effectiveness + 1);
     console.log(
-      `complete ${damage}, attackStatattackStat ${attackStat}, defenseStat ${defenseStat}, baseDamage ${baseDamage}, effectiveness ${effectiveness}`
+      `complete ${damage}, attackStat ${attackStat}, defenseStat ${defenseStat}, baseDamage ${baseDamage}, effectiveness ${effectiveness}, isPhysical ${
+        (isPhysical, isSpecial)
+      }: ${move.type}
+      }`
     );
 
     // Apply damage
