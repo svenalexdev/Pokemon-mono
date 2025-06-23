@@ -1,5 +1,3 @@
-// import { logEffectiveness } from './logEffectiveness';
-
 const typeEffective = {
   normal: {
     rock: 0.5,
@@ -158,55 +156,5 @@ const typeEffective = {
     steel: 0.5
   }
 };
-
-// //Get stat from API formate
-// const getStat = (pokemon, statName) => {
-//   const stat = pokemon.stats.find(s => s.stat.name === statName); //find stat where name match
-//   return stat ? stat.base_stat : 1;
-// };
-
-// //Damage Calculator
-
-// export const calculateDamage = (attacker, defender, move) => {
-//   //const level = attacker.level || 50;
-//   const movePower = move.power || 1;
-//   const moveType = move.type.name;
-//   const damageClass = move.damage_class.name;
-
-//   if (!movePower || damageClass === 'status') return 0;
-
-//   const attackerStat = damageClass === 'physical' ? getStat(attacker, 'attack') : getStat(attacker, 'special-attack');
-
-//   const defenderStat = damageClass === 'physical' ? getStat(defender, 'defense') : getStat(defender, 'special-defense');
-
-//   //for Base damage calculate
-
-//   let baseDamage = 10;
-//   //let baseDamage = (((1 * level) / 5 + 2) * movePower * (attckStat / defenseStat)) / 50 + 2;
-
-//   //for effectiveness
-//   let effectiveness = 1;
-//   defender.type.forEach(deftype => {
-//     // Ex = typeEffective['fire'].?(optional if movetype morethan one) ??(if there is no value than default 1)
-//     const modifire = typeEffective[moveType]?.[deftype.type.name] ?? 1;
-//     effectiveness *= modifire; //multiplies all modifire values
-//   });
-
-//   let damage = (attackerStat / defenderStat) * effectiveness * baseDamage;
-
-//   //same type attack bonas
-//   const attckerTypes = attacker.type.map(t => t.type.name);
-//   if (attckerTypes.includes(moveType)) {
-//     damage *= 1.5;
-//   }
-
-//   if (Math.random() < 0.1) {
-//     damage *= 1.5;
-//     console.log("It's crical hit!");
-//   }
-
-//   logEffectiveness(move.name, effectiveness);
-//   return Math.floor(damage);
-// };
 
 export { typeEffective };

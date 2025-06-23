@@ -136,9 +136,6 @@ function IntroScreen({ onStartGame }) {
               className="w-full p-2 border rounded bg-white"
               required
             />
-            {/* {playerName && (
-              <p className="text-sm text-gray-500 mt-1">Welcome back, {playerName}! Choose your Pokémon.</p>
-            )} */}
           </div>
           <div className="mb-4 w-90 relative">
             <label className="block mb-2 text-xl uppercase">What Pokemon do you want to fight with?</label>
@@ -187,15 +184,6 @@ function IntroScreen({ onStartGame }) {
             >
               {isSearching ? 'Loading...' : 'Get Random Pokemon'}
             </button>
-            {/* {isSearching && (
-              <div className="absolute z-10 w-full bg-white border rounded mt-1 p-2">
-                <div className="text-center py-2">Searching...</div>
-              </div>
-            )} */}
-
-            {/* {error && !isSearching && searchResults.length === 0 && searchTerm.length > 0 && (
-              <div className="absolute z-10 w-full bg-white border rounded mt-1 p-2 text-red-500">{error}</div>
-            )} */}
           </div>
           {selectedPokemon && (
             <div>

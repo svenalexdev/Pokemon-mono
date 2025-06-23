@@ -53,8 +53,3 @@ function EnemyInfo() {
 }
 
 export default EnemyInfo;
-// className={`
-//         absolute top-30 left-0 w-110 bg-blue-100 border-2 border-blue-300 rounded-b-lg
-//         overflow-hidden transition-all duration-300 ease-in-out
-//         ${isHovered ? 'max-h-56 opacity-100' : 'max-h-0 opacity-0'}
-//       `}
