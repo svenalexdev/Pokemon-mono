@@ -57,7 +57,7 @@
 
 This project uses a **monorepo** structure:
 
-    Pokemon-mono/
+    Pokebrawl/
     ├── backend/      → Express backend with MongoDB
     └── frontend/     → React + Vite frontend
 
@@ -96,9 +96,10 @@ Then install dependencies and run both servers:
 
 ## 👥 Team
 
+- [@svenalexdev](https://github.com/your-github-handle)
 - [@AnkitaMalani](https://github.com/AnkitaMalani)
 - [@marcochippy](https://github.com/marcochippy)  
-- [@Stradow](https://github.com/Stradow)  
+- [@Stradow](https://github.com/Stradow)
 
 ---
 
