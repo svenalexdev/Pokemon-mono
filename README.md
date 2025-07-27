@@ -92,3 +92,18 @@ npm run dev
 cd frontend
 npm install
 npm run dev
+
+
+## 👥 Contributors
+
+- [@marcochippy](https://github.com/marcochippy)  
+- [@Stradow](https://github.com/Stradow)  
+- [@AnkitaMalani](https://github.com/AnkitaMalani)
+
+---
+
+## 📜 License
+
+This project was created for educational purposes as part of a Web Development Bootcamp.  
+You are welcome to explore, fork, and learn from it.  
+Not intended for commercial use.
