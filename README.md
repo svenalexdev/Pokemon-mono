@@ -57,9 +57,9 @@
 
 This project uses a **monorepo** structure:
 
-Pokemon-mono/
-├── backend/ → Express backend with MongoDB
-└── frontend/ → React + Vite frontend
+    Pokemon-mono/
+    ├── backend/      → Express backend with MongoDB
+    └── frontend/     → React + Vite frontend
 
 ---
 
