@@ -82,27 +82,27 @@ The app is deployed and ready to use at:
 
 Then install dependencies and run both servers:
 
-```bash
-# Backend
-cd backend
-npm install
-npm run dev
+    # Backend
+    cd backend
+    npm install
+    npm run dev
 
-# Frontend
-cd frontend
-npm install
-npm run dev
+    # Frontend
+    cd frontend
+    npm install
+    npm run dev
+
+---
 
 ## 👥 Team
 
+- [@AnkitaMalani](https://github.com/AnkitaMalani)
 - [@marcochippy](https://github.com/marcochippy)  
 - [@Stradow](https://github.com/Stradow)  
-- [@AnkitaMalani](https://github.com/AnkitaMalani)
 
 ---
 
 ## 📜 License
 
 This project was created for educational purposes as part of a Web Development Bootcamp.  
-You are welcome to explore, fork, and learn from it.  
 Not intended for commercial use.
