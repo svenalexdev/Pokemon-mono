@@ -93,8 +93,7 @@ cd frontend
 npm install
 npm run dev
 
-
-## 👥 Contributors
+## 👥 Team
 
 - [@marcochippy](https://github.com/marcochippy)  
 - [@Stradow](https://github.com/Stradow)  
